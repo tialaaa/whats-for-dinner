@@ -4,7 +4,44 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   </head>
   <body>
-    
+    <nav>
+      <h2 id="title">What's for Dinner?</h2>
+      <button id="show-all">Show All Recipes</button>
+    </nav>
+    <main>
+      <section class="homepage">
+        <h2 id="form">What are you looking for?</h2>
+        <!-- research form requirements -->
+        <form>
+          <!-- is value needed on the inputs? or empty string? -->
+          <input type="radio" id="side" value="Side"> 
+          <label for="side">Side></label><br>
+
+          <input type="radio" id="main" value="Main">
+          <label for="main">Main Dish></label><br>
+
+          <input type="radio" id="dessert" value="Dessert">
+          <label for="dessert">Dessert></label><br>
+
+          <input type="radio" id="meal" value="Meal">
+          <label for="meal">Entire Meal></label><br>
+
+          <!-- use button or input type for Submit? -->
+          <input type="submit" value="Submit">
+          <button id="lets-cook">Let's Cook!</button>
+        </form>
+      </section>
+      <section class="homepage">
+        <img src="" alt="">
+        <h4>You should make:</h4>
+        <h1 id="recipe-output"></h1>
+        <button>Clear</button>
+      </section>
+      <section class="all-recipes">
+        <!-- 3 sections for the arrays -->
+        <!-- grid within each section -->
+      </section>
+    </main>
   </body>
   <script type="text/javascript" src="main.js"></script>
 </html>
