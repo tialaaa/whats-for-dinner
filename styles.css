@@ -68,6 +68,10 @@ main {
     justify-content: space-evenly;
 }
 
+.form-rows {
+    padding: 1em 0 1em 0;
+}
+
 #cookpot {
     height: auto;
     width: 150px;
@@ -77,7 +81,7 @@ main {
 
 #lets-cook {
     background-color: #0fb9b1;
-    width: 40%;
+    width: 50%;
     align-self: flex-start;
 }
 
