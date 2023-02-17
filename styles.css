@@ -1,10 +1,88 @@
-/* font-family: 'Roboto', sans-serif;
-
+/* 
 COLORS
 teal - #0fb9b1;
 frosted white - rgba(225, 225, 225, .9);
 grey - #95a5a6;
 red - #ee5253
-
 */
 
+/* ~~~ GLOBAL RULES ~~~ */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-image: url("assets/burger-friends.jpg");
+    background-size: cover;
+    margin: 0;
+}
+
+nav {
+    background-color: #0fb9b1;
+    height: 4em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#site-name {
+    margin: 25px;
+}
+
+.nav-button {
+    margin: 25px;
+}
+
+button {
+    height: 2.5em;
+    border: 0;
+    border-radius: 0.25em;
+    padding: 0.5em;
+    text-transform: uppercase;
+    transition: background-color 0.5s;
+}
+
+button:hover {
+    background-color: white !important;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ~~~ HOME PAGE ~~~ */
+
+main {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.homepage-sections {
+    background-color: rgba(225, 225, 225, .9);
+    height: 400px;
+    width: 30%;
+    padding: 40px;
+    margin: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.form-rows {
+    padding: 1em 0 1em 0;
+}
+
+#cookpot {
+    height: auto;
+    width: 150px;
+    max-width: 90%;
+    align-self: center;
+}
+
+#lets-cook {
+    background-color: #0fb9b1;
+    width: 50%;
+    align-self: flex-start;
+}
+
+/* ~~~ ALL RECIPES PAGE ~~~ */

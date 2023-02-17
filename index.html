@@ -5,41 +5,40 @@
   </head>
   <body>
     <nav>
-      <h2 id="title">What's for Dinner?</h2>
-      <button id="show-all">Show All Recipes</button>
+      <h3 id="site-name">What's for Dinner?</h3>
+      <button class="nav-button" id="show-all">Show All Recipes</button>
     </nav>
     <main>
-      <section class="homepage">
-        <h2 id="form">What are you looking for?</h2>
-        <!-- research form requirements -->
+      <section class="homepage-sections" id="left">
+        <h1 id="form">What are you looking for?</h1>
         <form>
-          <!-- is value needed on the inputs? or empty string? -->
-          <input type="radio" id="side" value="Side"> 
-          <label for="side">Side></label><br>
-
-          <input type="radio" id="main" value="Main">
-          <label for="main">Main Dish></label><br>
-
-          <input type="radio" id="dessert" value="Dessert">
-          <label for="dessert">Dessert></label><br>
-
-          <input type="radio" id="meal" value="Meal">
-          <label for="meal">Entire Meal></label><br>
-
-          <!-- use button or input type for Submit? -->
-          <input type="submit" value="Submit">
-          <button id="lets-cook">Let's Cook!</button>
+          <div class="form-rows">
+            <!-- is value needed on the inputs? or empty string? -->
+            <input type="radio" id="side" value="Side"> 
+            <label for="side">Side</label><br>
+          </div>
+          <div class="form-rows">
+            <input type="radio" id="main" value="Main">
+            <label for="main">Main Dish</label><br>
+          </div>
+          <div class="form-rows">
+            <input type="radio" id="dessert" value="Dessert">
+            <label for="dessert">Dessert</label><br>
+          </div>
         </form>
+        <button id="lets-cook">Let's Cook!</button>
       </section>
-      <section class="homepage">
-        <img src="" alt="">
+      <section class="homepage-sections" id="right-no-selection">
+        <img id="cookpot" src="assets/cookpot.svg" alt="cookpot with lid outline">
+      </section>
+      <section class="homepage-sections hidden" id="right-with-selection">
         <h4>You should make:</h4>
-        <h1 id="recipe-output"></h1>
-        <button>Clear</button>
+        <h1 id="selection-output" value=""></h1>
+        <button id="clear">Clear</button>
       </section>
-      <section class="all-recipes">
-        <!-- 3 sections for the arrays -->
-        <!-- grid within each section -->
+      <section class="all-recipes hidden">
+        <!-- 3 sections for the arrays, with flex-wrap on -->
+        <!-- unordered list within each section -->
       </section>
     </main>
   </body>
