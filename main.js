@@ -1,9 +1,19 @@
-var buttonShowAllRecipes = document.querySelector('.all-recipes');
-var formSubmit = document.querySelector('#lets-cook');
+// var buttonShowAllRecipes = document.querySelector('.all-recipes');
+// var buttonLetsCook = document.querySelector('#lets-cook');
+var homeNoRecipe = document.querySelector('#right-no-selection');
+var homeShowRecipe = document.querySelector('#right-with-selection');
+var form = document.querySelector('#recipeTypeForm')
 
 // buttonShowAllRecipes.addEventListener('click', showAllRecipes);
-// formSubmit.addEventListener('click', displayRecipe);
-formSubmit.addEventListener('click', getMealType);
+// buttonLetsCook.addEventListener('click', displayRecipe);
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    var selectedType = document.querySelector('input[name="dinner-type"]:checked').value;
+    randomizeRecipe(selectedType);
+    displayRecipe();
+});
+// should I separate these functions ^^? do I need buttonLetsCook?
 
 var recipe = ""
 
@@ -57,37 +67,25 @@ var meals = {
     ]
 };
 
-// Function getMealType needs to:
-// --define var formSelection using query selector based on user's input
-// --loop thru formSelection to identify which value was selected
-// --redefine formSelection w/ that output
-// --return formSelection
+function getRandomIndex(array) {
+    var arrayIndex = Math.floor(Math.random() * array.length);
+    return array[arrayIndex];
+  };
 
-// Function randonmizeRecipe based on meal type selection, needs to:
-// --using getMealType's return, loop thru the meals object to identify which property to use
-// --within that property, randomize a return value & store in var recipe
+function randomizeRecipe(typeToMatch) {
+    var matchedMealsArray = meals[`${typeToMatch}`];
 
-// Function displayRecipe, needs to:
-// --hide cookput img section
-// --show answer section
-// --inner.HTML to populate the section using randomizeRecipe's return
-
-function getMealType() {
-    var formSelection = document.getElementsByName('dinner-type');
-
-    for (var i = 0; i < formSelection.length; i++) {
-        if (formSelection[i].checked) {
-            formSelection = formSelection[i].value;
-            return formSelection;
-        };
-    };
+    recipe = getRandomIndex(matchedMealsArray)
 };
 
+function displayRecipe() {
+    console.log(`random recipe: ${recipe}`)
+    homeNoRecipe.classList.add('hidden');
+    homeShowRecipe.classList.remove('hidden');
+    homeShowRecipe.innerHTML = `
+        <h4>You should make:</h4>
+        <h1 id="selection-output">${recipe}</h1>
+        <button id="clear">Clear</button>
+    `
+};
 
-// function randomizeRecipe() {
-
-// }
-
-// function displayRecipe() {
-
-// }
