@@ -11,22 +11,22 @@
     <main>
       <section class="homepage-sections" id="left">
         <h1 id="form">What are you looking for?</h1>
-        <!-- research form requirements -->
         <form>
-          <!-- is value needed on the inputs? or empty string? -->
-          <input type="radio" id="side" value="Side"> 
-          <label for="side">Side</label><br>
-
-          <input type="radio" id="main" value="Main">
-          <label for="main">Main Dish</label><br>
-
-          <input type="radio" id="dessert" value="Dessert">
-          <label for="dessert">Dessert</label><br>
-
-          <!-- use button or input type for Submit? -->
-          <!-- <input type="submit" value="Submit"> -->
-          <button id="lets-cook">Let's Cook!</button>
+          <div class="form-rows">
+            <!-- is value needed on the inputs? or empty string? -->
+            <input type="radio" id="side" value="Side"> 
+            <label for="side">Side</label><br>
+          </div>
+          <div class="form-rows">
+            <input type="radio" id="main" value="Main">
+            <label for="main">Main Dish</label><br>
+          </div>
+          <div class="form-rows">
+            <input type="radio" id="dessert" value="Dessert">
+            <label for="dessert">Dessert</label><br>
+          </div>
         </form>
+        <button id="lets-cook">Let's Cook!</button>
       </section>
       <section class="homepage-sections" id="right-no-selection">
         <img id="cookpot" src="assets/cookpot.svg" alt="cookpot with lid outline">
