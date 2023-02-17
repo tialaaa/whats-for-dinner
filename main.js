@@ -89,3 +89,14 @@ function displayRecipe() {
     `
 };
 
+// DRY update for show/hide sections:
+// function changeView(pageToUpdate) {
+//     if ("pageToUpdate class contains hidden") {
+//         pageToUpdate.classList.remove('hidden');
+//     } else {
+//         pageToUpdate.classList.add('hidden');
+//     }
+// }
+
+// changeView(mainPage);
+// changeView(otherPage);
