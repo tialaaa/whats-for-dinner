@@ -6,6 +6,8 @@ grey - #95a5a6;
 red - #ee5253
 */
 
+/* ~~~ GLOBAL RULES ~~~ */
+
 body {
     font-family: 'Roboto', sans-serif;
     background-image: url("assets/burger-friends.jpg");
@@ -21,12 +23,11 @@ nav {
     align-items: center;
 }
 
-#title {
-    /* border: thick solid red; */
+#site-name {
     margin: 25px;
 }
 
-#show-all {
+.nav-button {
     margin: 25px;
 }
 
@@ -36,8 +37,48 @@ button {
     border-radius: 0.25em;
     padding: 0.5em;
     text-transform: uppercase;
+    transition: background-color 0.5s;
 }
 
-/* main {
-    
-} */
+button:hover {
+    background-color: white !important;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ~~~ HOME PAGE ~~~ */
+
+main {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.homepage-sections {
+    background-color: rgba(225, 225, 225, .9);
+    height: 400px;
+    width: 30%;
+    padding: 40px;
+    margin: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+#cookpot {
+    height: auto;
+    width: 150px;
+    max-width: 90%;
+    align-self: center;
+}
+
+#lets-cook {
+    background-color: #0fb9b1;
+    width: 40%;
+    align-self: flex-start;
+}
+
+/* ~~~ ALL RECIPES PAGE ~~~ */
