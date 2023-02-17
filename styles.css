@@ -68,6 +68,12 @@ main {
     justify-content: space-evenly;
 }
 
+#form-required:after {
+    content:"*";
+    color:red;
+    padding: 0.15em;
+}
+
 .form-rows {
     padding: 1em 0 1em 0;
 }
