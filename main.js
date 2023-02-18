@@ -2,7 +2,8 @@
 // var buttonLetsCook = document.querySelector('#lets-cook');
 var homeNoRecipe = document.querySelector('#right-no-selection');
 var homeShowRecipe = document.querySelector('#right-with-selection');
-var form = document.querySelector('#recipeTypeForm')
+var form = document.querySelector('#recipeTypeForm');
+var buttonClear = document.querySelector('#clear');
 
 // buttonShowAllRecipes.addEventListener('click', showAllRecipes);
 // buttonLetsCook.addEventListener('click', displayRecipe);
@@ -14,6 +15,14 @@ form.addEventListener('submit', function(event) {
     displayRecipe();
 });
 // should I separate these functions ^^? do I need buttonLetsCook?
+
+buttonClear.addEventListener('click', function() {
+    // TODO: figure out why this preventDefault is needed
+    event.preventDefault();
+    alert(`message for alert`);
+})
+
+// buttonShowAllRecipes.addEventListener('click', console.log(`somethin else`));
 
 var recipe = ""
 
@@ -67,21 +76,31 @@ var meals = {
     ]
 };
 
+// function changeView(viewToUpdate) {
+//     if (viewToUpdate.classList.contains('hidden') === true) {
+//         viewToUpdate.classList.remove('hidden');
+//     } else {
+//         viewToUpdate.classList.add('hidden');
+//     };
+// };
+
 function getRandomIndex(array) {
     var arrayIndex = Math.floor(Math.random() * array.length);
     return array[arrayIndex];
-  };
+};
 
 function randomizeRecipe(typeToMatch) {
     var matchedMealsArray = meals[`${typeToMatch}`];
 
-    recipe = getRandomIndex(matchedMealsArray)
+    recipe = getRandomIndex(matchedMealsArray);
 };
 
 function displayRecipe() {
-    console.log(`random recipe: ${recipe}`)
+    // changeView(homeNoRecipe);
+    // changeView(homeShowRecipe);
     homeNoRecipe.classList.add('hidden');
     homeShowRecipe.classList.remove('hidden');
+
     homeShowRecipe.innerHTML = `
         <div id="recipe-output">
           <h4>You should make:</h4>
@@ -89,16 +108,32 @@ function displayRecipe() {
         </div>
         <button id="clear">Clear</button>
     `
+    console.log(`is it this?`)
 };
 
-// DRY update for show/hide sections:
-// function changeView(pageToUpdate) {
-//     if ("pageToUpdate class contains hidden") {
-//         pageToUpdate.classList.remove('hidden');
-//     } else {
-//         pageToUpdate.classList.add('hidden');
-//     }
-// }
+function displayHomepage() {
+    console.log(`displayHomepage function was called`)
+    // console.log(homeNoRecipe)
+    // changeView(homeNoRecipe);
 
-// changeView(mainPage);
-// changeView(otherPage);
+    // console.log(homeShowRecipe)
+    // changeView(homeShowRecipe);
+};
+
+
+
+
+function displayAllRecipes() {
+    // show class all-recipes
+    // hide homeNoRecipe + homeShowRecipe
+}
+
+// VIEW NOTES FOR HIDE/SHOW CHECKS:
+// view:        Start -> All recipes-> Back home -> Show Recipe -> Clear
+// homeNoRecipe: true ->   false ->    true    ->  false          -> true
+// homeShowRecipe: false -> false ->   false   ->   true          -> false
+// allRecipes:   false  ->  true  ->   false   ->  false          -> false
+
+// function displayHomepage = back home & clear & load
+// function displayRecipe  = show recipe
+// function showAllRecipes = show all
