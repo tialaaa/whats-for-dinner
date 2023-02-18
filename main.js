@@ -67,21 +67,29 @@ var meals = {
     ]
 };
 
+function changeView(viewToUpdate) {
+    if (viewToUpdate.classList.contains('hidden') === true) {
+        viewToUpdate.classList.remove('hidden');
+    } else {
+        viewToUpdate.classList.add('hidden');
+    };
+};
+
 function getRandomIndex(array) {
     var arrayIndex = Math.floor(Math.random() * array.length);
     return array[arrayIndex];
-  };
+};
 
 function randomizeRecipe(typeToMatch) {
     var matchedMealsArray = meals[`${typeToMatch}`];
-
-    recipe = getRandomIndex(matchedMealsArray)
+    
+    recipe = getRandomIndex(matchedMealsArray);
 };
 
 function displayRecipe() {
-    console.log(`random recipe: ${recipe}`)
-    homeNoRecipe.classList.add('hidden');
-    homeShowRecipe.classList.remove('hidden');
+    changeView(homeNoRecipe);
+    changeView(homeShowRecipe);
+
     homeShowRecipe.innerHTML = `
         <div id="recipe-output">
           <h4>You should make:</h4>
@@ -90,15 +98,3 @@ function displayRecipe() {
         <button id="clear">Clear</button>
     `
 };
-
-// DRY update for show/hide sections:
-// function changeView(pageToUpdate) {
-//     if ("pageToUpdate class contains hidden") {
-//         pageToUpdate.classList.remove('hidden');
-//     } else {
-//         pageToUpdate.classList.add('hidden');
-//     }
-// }
-
-// changeView(mainPage);
-// changeView(otherPage);
