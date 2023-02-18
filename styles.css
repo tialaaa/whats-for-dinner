@@ -72,7 +72,7 @@ main {
 
 #form-required:after {
     content:"*";
-    color:red;
+    color:ee5253;
     padding: 0.15em;
 }
 
@@ -130,6 +130,7 @@ h4 {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    position: relative;
     width: 95%;
 }
 
@@ -148,5 +149,28 @@ h4 {
 }
 
 .selected-meal {
-    color: red;
+    text-shadow: 1px 1px 2px #0fb9b1;
 }
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    /* gap: 0.4rem; */
+    width: 450px;
+    padding: 1.3rem;
+    min-height: 250px;
+    top: 20%;
+    background-color: white;
+    border-radius: 1em;
+  }
+
+  .close {
+    background-color: white;
+    padding: 0.7rem 0.7rem;
+    position: absolute;
+    margin: 0;
+    right: 5%;
+    top: 5%;
+  }
