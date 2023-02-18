@@ -10,7 +10,7 @@
     </nav>
     <main>
       <section class="homepage-sections" id="left">
-        <h1 id="form-required">What are you looking for?</h1>
+        <h1  id="form-required">What are you looking for?</h1>
         <form id="recipeTypeForm">
           <div class="form-rows">
             <input type="radio" name="dinner-type" id="side" value="side" required> 
@@ -31,8 +31,10 @@
         <img id="cookpot" src="assets/cookpot.svg" alt="cookpot with lid outline">
       </section>
       <section class="homepage-sections hidden" id="right-with-selection">
-        <h4>You should make:</h4>
-        <h1 id="selection-output" value=""></h1>
+        <div id="recipe-output">
+          <h4>You should make:</h4>
+          <h1 class="largest" id="selection-output"></h1>
+        </div>
         <button id="clear">Clear</button>
       </section>
       <section class="all-recipes hidden">

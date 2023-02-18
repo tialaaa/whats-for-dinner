@@ -83,9 +83,22 @@ function displayRecipe() {
     homeNoRecipe.classList.add('hidden');
     homeShowRecipe.classList.remove('hidden');
     homeShowRecipe.innerHTML = `
-        <h4>You should make:</h4>
-        <h1 id="selection-output">${recipe}</h1>
+        <div id="recipe-output">
+          <h4>You should make:</h4>
+          <h1 class="largest" id="selection-output">${recipe}!</h1>
+        </div>
         <button id="clear">Clear</button>
     `
 };
 
+// DRY update for show/hide sections:
+// function changeView(pageToUpdate) {
+//     if ("pageToUpdate class contains hidden") {
+//         pageToUpdate.classList.remove('hidden');
+//     } else {
+//         pageToUpdate.classList.add('hidden');
+//     }
+// }
+
+// changeView(mainPage);
+// changeView(otherPage);
