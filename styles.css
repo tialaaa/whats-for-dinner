@@ -39,7 +39,7 @@ button {
     padding: 0.5em;
     text-transform: uppercase;
     transition: background-color 0.5s;
-}
+} */
 
 button:hover {
     background-color: white !important;
@@ -48,7 +48,7 @@ button:hover {
 
 .hidden {
     display: none !important;
-}
+} 
 
 /* ~~~ HOME PAGE ~~~ */
 
@@ -100,7 +100,7 @@ main {
     margin: 0;
     right: 5%;
     bottom: 5%;
-}
+} 
 
 #clear:hover {
     color: black;
