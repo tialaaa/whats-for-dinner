@@ -1,5 +1,4 @@
-var buttonShowAll = document.querySelector('#show-all');
-// ^^ change var name to more generic 'nav-button', so it works regardless of which page you're on?
+var buttonNav = document.querySelector('.nav-button');
 var viewForm = document.querySelector('#left');
 var viewNoRecipe = document.querySelector('#right-no-selection');
 var viewShowRecipe = document.querySelector('#right-with-selection');
@@ -7,6 +6,10 @@ var viewAllRecipes = document.querySelector('#all-recipes');
 var form = document.querySelector('#recipeTypeForm');
 var recipeOutput = document.querySelector('#recipe-output');
 var buttonClear = document.querySelector('#clear');
+
+var listSides = document.querySelector('#list-sides');
+var listMains = document.querySelector('#list-mains');
+var listDesserts = document.querySelector('#list-desserts');
 
 form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -17,10 +20,12 @@ form.addEventListener('submit', function(event) {
 });
 
 buttonClear.addEventListener('click', displayHomepage);
-buttonShowAll.addEventListener('click', displayAllRecipes);
+buttonNav.addEventListener('click', function() {
+    checkFlag(flagNav);
+});
 
+var flagNav = "homepage";
 var recipe = "";
-
 var meals = {
     side: [
         "Miso Glazed Carrots",
@@ -93,19 +98,61 @@ function displayRandomRecipe() {
 };
 
 function displayHomepage() {
+    flagNav = "homepage";
+
+    viewForm.classList.remove('hidden');
     viewNoRecipe.classList.remove('hidden');
     viewShowRecipe.classList.add('hidden');
+    viewAllRecipes.classList.add('hidden');
     // TODO: Clear radio button selection
+
+    listSides.innerText = "";
+    listMains.innerText = "";
+    listDesserts.innerText = "";
+};
+
+function checkFlag(flagNav) {
+    if (flagNav === "homepage") {
+        displayAllRecipes();
+    } else if (flagNav === "allRecipes") {
+        displayHomepage();
+    };
 };
 
 function displayAllRecipes() {
+    flagNav = "allRecipes";
+
     viewAllRecipes.classList.remove('hidden');
     viewForm.classList.add('hidden');
     viewNoRecipe.classList.add('hidden');
     viewShowRecipe.classList.add('hidden');
+
+    makeLists(meals);
 };
 
+function makeLists(meals) {
+    var listItemSide = document.createElement('li');
+    var listItemMain = document.createElement('li');
+    var listItemDessert = document.createElement('li');
 
+    for (var i = 0; i < meals.side.length; i++) {
+        listItemSide.innerText = meals.side[i];
+        listSides.appendChild(listItemSide);
+        listItemSide = document.createElement('li');
+    };
+
+    for (var i = 0; i < meals.main.length; i++) {
+        listItemMain.innerText = meals.main[i];
+        listMains.appendChild(listItemMain);
+        listItemMain = document.createElement('li');
+    };
+
+    for (var i = 0; i < meals.dessert.length; i++) {
+        listItemDessert.innerText = meals.dessert[i];
+        listDesserts.appendChild(listItemDessert);
+        listItemDessert = document.createElement('li');
+    };
+};
 
 
 
