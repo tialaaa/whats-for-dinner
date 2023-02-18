@@ -53,8 +53,27 @@
         <form id="meal-adjustments">
           <button class="adjust" id="add">Add Meal</button>
           <button class="adjust" id="edit" disabled>Edit Meal</button>
-          <button class="adjust" id="delete" disabled>Delete Meal</button>         
+          <button class="adjust" id="delete" disabled>Delete Meal</button>    
         </form>
+        <section class="modal hidden" id="modalAdd">
+          <!-- <div class="modal-content"> -->
+            <button class="close">x</button>
+            <form id="add-new-meal">
+              <label for="add-to-type">Meal Category</label>
+              <select id="add-to-type">
+                <option value="side">Side</option>
+                <option value="main">Main</option>
+                <option value="dessert">Dessert</option>
+              </select>
+
+              <label for="new-meal">Meal Name</label>
+              <input type="text" id="new-meal" value="">
+              
+              <button type="submit" id="submit-add">Add Meal</button>
+            </form>
+          <!-- </div> -->
+        </section>
+        <div class="overlay hidden"></div>
       </section>
     </main>
   </body>
