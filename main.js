@@ -1,22 +1,25 @@
-// var buttonShowAllRecipes = document.querySelector('.all-recipes');
-var homeNoRecipe = document.querySelector('#right-no-selection');
-var homeShowRecipe = document.querySelector('#right-with-selection');
-var recipeOutput = document.querySelector('#recipe-output');
+var buttonShowAll = document.querySelector('#show-all');
+// ^^ change var name to more generic 'nav-button', so it works regardless of which page you're on?
+var viewForm = document.querySelector('#left');
+var viewNoRecipe = document.querySelector('#right-no-selection');
+var viewShowRecipe = document.querySelector('#right-with-selection');
+var viewAllRecipes = document.querySelector('#all-recipes');
 var form = document.querySelector('#recipeTypeForm');
+var recipeOutput = document.querySelector('#recipe-output');
 var buttonClear = document.querySelector('#clear');
-
-// buttonShowAllRecipes.addEventListener('click', showAllRecipes);
 
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     var selectedType = document.querySelector('input[name="dinner-type"]:checked').value;
     randomizeRecipe(selectedType);
-    displayRecipe();
+    displayRandomRecipe();
+    // TODO: could optimize by calling randomizeRecipe within displayRandomRecipe
 });
 
 buttonClear.addEventListener('click', displayHomepage);
+buttonShowAll.addEventListener('click', displayAllRecipes);
 
-var recipe = ""
+var recipe = "";
 
 var meals = {
     side: [
@@ -79,9 +82,9 @@ function randomizeRecipe(typeToMatch) {
     recipe = getRandomIndex(matchedMealsArray);
 };
 
-function displayRecipe() {
-    homeNoRecipe.classList.add('hidden');
-    homeShowRecipe.classList.remove('hidden');
+function displayRandomRecipe() {
+    viewNoRecipe.classList.add('hidden');
+    viewShowRecipe.classList.remove('hidden');
 
     recipeOutput.innerHTML = `
         <h4>You should make:</h4>
@@ -90,27 +93,31 @@ function displayRecipe() {
 };
 
 function displayHomepage() {
-    homeNoRecipe.classList.remove('hidden');
-    homeShowRecipe.classList.add('hidden');
+    viewNoRecipe.classList.remove('hidden');
+    viewShowRecipe.classList.add('hidden');
     // TODO: Clear radio button selection
 };
 
 function displayAllRecipes() {
-    // show class all-recipes
-    // hide homeNoRecipe + homeShowRecipe
+    viewAllRecipes.classList.remove('hidden');
+    viewForm.classList.add('hidden');
+    viewNoRecipe.classList.add('hidden');
+    viewShowRecipe.classList.add('hidden');
 };
+
+
+
 
 
 // VIEW NOTES FOR HIDE/SHOW CHECKS:
 // view:        Start -> All recipes-> Back home -> Show Recipe -> Clear
-// homeNoRecipe: true ->   false ->    true    ->  false          -> true
-// homeShowRecipe: false -> false ->   false   ->   true          -> false
+// viewNoRecipe: true ->   false ->    true    ->  false          -> true
+// viewShowRecipe: false -> false ->   false   ->   true          -> false
 // allRecipes:   false  ->  true  ->   false   ->  false          -> false
 
 // function displayHomepage = back home & clear & load
-// function displayRecipe  = show recipe
+// function displayRandomRecipe  = show recipe
 // function showAllRecipes = show all
-
 
 // function toggleView(viewToUpdate) {
 //     if (viewToUpdate.classList.contains('hidden') === true) {
