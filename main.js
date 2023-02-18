@@ -11,9 +11,6 @@ var listSides = document.querySelector('#list-sides');
 var listMains = document.querySelector('#list-mains');
 var listDesserts = document.querySelector('#list-desserts');
 
-var buttonAdd = document.querySelector('#add');
-var buttonEdit = document.querySelector('#edit');
-var buttonDelete = document.querySelector('#delete');
 
 form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -198,11 +195,24 @@ function toggleButtons(buttonEdit, buttonDelete, chosenMeal) {
     }
 };
 
-buttonAdd.addEventListener('click', showAddModal());
+var buttonAdd = document.querySelector('#add');
+var buttonEdit = document.querySelector('#edit');
+var buttonDelete = document.querySelector('#delete');
+var modalForAdd = document.querySelector('#modalAdd');
+var buttonClose = document.querySelector('.close');
+
+buttonAdd.addEventListener('click', function(event) {
+    event.preventDefault();
+    console.log(`add was pressed`)
+    showAddModal();
+});
+
 buttonEdit.addEventListener('click', showEditModal());
 buttonDelete.addEventListener('click', showDeleteModal());
 
 function showAddModal() {
+    modalForAdd.classList.remove('hidden');
+
 };
 
 function showEditModal() {
