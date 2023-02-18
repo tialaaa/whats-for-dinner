@@ -141,3 +141,8 @@ h4 {
     display: flex;
     flex-direction: column;
 }
+
+.list-headers {
+    text-align: center;
+    text-decoration: underline;
+}
