@@ -11,6 +11,10 @@ var listSides = document.querySelector('#list-sides');
 var listMains = document.querySelector('#list-mains');
 var listDesserts = document.querySelector('#list-desserts');
 
+var buttonAdd = document.querySelector('#add');
+var buttonEdit = document.querySelector('#edit');
+var buttonDelete = document.querySelector('#delete');
+
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     var selectedType = document.querySelector('input[name="dinner-type"]:checked').value;
@@ -26,6 +30,7 @@ buttonNav.addEventListener('click', function() {
 
 var flagNav = "homepage";
 var recipe = "";
+var chosenMeal = null
 var meals = {
     side: [
         "Miso Glazed Carrots",
@@ -154,6 +159,57 @@ function makeLists(meals) {
     };
 };
 
+listSides.addEventListener('click', function(event) {
+    targetMeal();
+    toggleButtons(buttonEdit, buttonDelete, chosenMeal);
+});
+
+listMains.addEventListener('click', function(event) {
+    targetMeal();
+    toggleButtons(buttonEdit, buttonDelete, chosenMeal);
+});
+
+listDesserts.addEventListener('click', function(event) {
+    targetMeal();
+    toggleButtons(buttonEdit, buttonDelete, chosenMeal);
+});
+
+function targetMeal() {
+    if (chosenMeal === null) {
+        chosenMeal = event.target.closest('li');
+        chosenMeal.classList.add('selected-meal');
+    } else if (chosenMeal === event.target.closest('li')) {
+        chosenMeal.classList.remove('selected-meal');
+        chosenMeal = null;
+    } else {
+        chosenMeal.classList.remove('selected-meal');
+        chosenMeal = event.target.closest('li');
+        chosenMeal.classList.add('selected-meal');
+    };
+};
+
+function toggleButtons(buttonEdit, buttonDelete, chosenMeal) {
+    if (chosenMeal !== null) {
+        buttonEdit.disabled = false;
+        buttonDelete.disabled = false;
+    } else {
+        buttonEdit.disabled = true;
+        buttonDelete.disabled = true;
+    }
+};
+
+buttonAdd.addEventListener('click', showAddModal());
+buttonEdit.addEventListener('click', showEditModal());
+buttonDelete.addEventListener('click', showDeleteModal());
+
+function showAddModal() {
+};
+
+function showEditModal() {
+};
+
+function showDeleteModal() {
+};
 
 
 // VIEW NOTES FOR HIDE/SHOW CHECKS:
