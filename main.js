@@ -1,3 +1,5 @@
+// ~~* HOME PAGE *~~ //
+
 var buttonNav = document.querySelector('.nav-button');
 var viewForm = document.querySelector('#left');
 var viewNoRecipe = document.querySelector('#right-no-selection');
@@ -11,18 +13,9 @@ var listSides = document.querySelector('#side');
 var listMains = document.querySelector('#main');
 var listDesserts = document.querySelector('#dessert');
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
-    var selectedType = document.querySelector('input[name="dinner-type"]:checked').value;
-    randomizeRecipe(selectedType);
-    displayRandomRecipe();
-    // TODO: could optimize by calling randomizeRecipe within displayRandomRecipe
-});
-
-buttonClear.addEventListener('click', displayHomepage);
-buttonNav.addEventListener('click', function() {
-    checkFlag(flagNav);
-});
+var listItemSide = document.createElement('li');
+var listItemMain = document.createElement('li');
+var listItemDessert = document.createElement('li');
 
 var flagNav = "homepage";
 var recipe = "";
@@ -76,6 +69,34 @@ var meals = {
         "Eclairs"
     ]
 };
+
+buttonClear.addEventListener('click', displayHomepage);
+buttonNav.addEventListener('click', function() {
+    checkFlag(flagNav);
+});
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    var selectedType = document.querySelector('input[name="dinner-type"]:checked').value;
+    randomizeRecipe(selectedType);
+    displayRandomRecipe();
+    // TODO: could optimize by calling randomizeRecipe within displayRandomRecipe
+});
+
+listSides.addEventListener('click', function(event) {
+    targetMeal();
+    toggleButtons();
+});
+
+listMains.addEventListener('click', function(event) {
+    targetMeal();
+    toggleButtons();
+});
+
+listDesserts.addEventListener('click', function(event) {
+    targetMeal();
+    toggleButtons();
+});
 
 function getRandomIndex(array) {
     var arrayIndex = Math.floor(Math.random() * array.length);
@@ -132,11 +153,9 @@ function displayAllRecipes() {
     viewShowRecipe.classList.add('hidden');
 
     makeLists(meals);
+    chosenMeal = null;
+    toggleButtons();
 };
-
-var listItemSide = document.createElement('li');
-var listItemMain = document.createElement('li');
-var listItemDessert = document.createElement('li');
 
 function makeLists(meals) {
 
@@ -159,19 +178,50 @@ function makeLists(meals) {
     };
 };
 
-listSides.addEventListener('click', function(event) {
-    targetMeal();
-    toggleButtons();
+// ~~* ALL RECIPES - ADD/EDIT/DELETE *~~ //
+
+var buttonShowAdd = document.querySelector('#add');
+var buttonShowEdit = document.querySelector('#edit');
+var buttonDelete = document.querySelector('#delete');
+
+var modalForAdd = document.querySelector('#modalAdd');
+var submitAdd = document.querySelector('#submit-add');
+var inputType = document.querySelector('#add-to-type');
+var inputName = document.querySelector('#new-meal');
+var buttonCloseAdd = document.querySelector('#close-add');
+
+var modalForEdit = document.querySelector('#modalEdit');
+var submitEdit = document.querySelector('#submit-edit');
+var changeName = document.querySelector('#change-meal');
+var buttonCloseEdit = document.querySelector('#close-edit');
+
+buttonCloseAdd.addEventListener('click', resetModals);
+buttonCloseEdit.addEventListener('click', resetModals);
+changeName.addEventListener('keyup', checkChange);
+
+buttonShowAdd.addEventListener('click', function(event) {
+    event.preventDefault();
+    showAddModal();
 });
 
-listMains.addEventListener('click', function(event) {
-    targetMeal();
-    toggleButtons();
+submitAdd.addEventListener('click', function(event) {
+    event.preventDefault();
+    addMeal();
 });
 
-listDesserts.addEventListener('click', function(event) {
-    targetMeal();
-    toggleButtons();
+buttonShowEdit.addEventListener('click', function(event) {
+    event.preventDefault();
+    showEditModal()
+});
+
+submitEdit.addEventListener('click', function(event) {
+    event.preventDefault();
+    editMeal();
+});
+
+buttonDelete.addEventListener('click', function(event) {
+    event.preventDefault();
+    deleteMeal()
 });
 
 function targetMeal() {
@@ -198,51 +248,12 @@ function toggleButtons() {
     }
 };
 
-// MODALS FOR ADD/EDIT/DELETE //
-var buttonShowAdd = document.querySelector('#add');
-var buttonShowEdit = document.querySelector('#edit');
-var buttonDelete = document.querySelector('#delete');
-var buttonClose = document.querySelector('.close');
-
-var modalForAdd = document.querySelector('#modalAdd');
-var submitAdd = document.querySelector('#submit-add');
-var inputType = document.querySelector('#add-to-type');
-var inputName = document.querySelector('#new-meal');
-
-var modalForEdit = document.querySelector('#modalEdit');
-var submitEdit = document.querySelector('#submit-edit');
-var changeType = document.querySelector('#change-type');
-var changeName = document.querySelector('#change-meal');
-
-buttonClose.addEventListener('click', resetModals);
-
-buttonShowAdd.addEventListener('click', function(event) {
-    event.preventDefault();
-    console.log(`add was pressed`)
-    showAddModal();
-});
-
-submitAdd.addEventListener('click', function(event) {
-    event.preventDefault();
-    addMeal();
-});
-
-buttonShowEdit.addEventListener('click', function(event) {
-    event.preventDefault();
-    showEditModal()
-});
-
-buttonDelete.addEventListener('click', function(event) {
-    event.preventDefault();
-    deleteMeal()
-});
-
 function resetModals() {
+    modalForAdd.classList.add('hidden');
     inputName.value = "";
     inputType.value = "side";
-    modalForAdd.classList.add('hidden');
-    // modal for edit = hide
-    // clear edit inputs
+    modalForEdit.classList.add('hidden');
+    changeName.value = "";
     // overlay.classList.add("hidden");
 }
 
@@ -258,7 +269,7 @@ function addMeal() {
 
     for (var i = 0; i < mealsArrayToAddTo.length; i++) {
         if (mealsArrayToAddTo[i] === newMealName) {
-            modalForAdd.classList.add('hidden');
+            resetModals();
             return;
         };
     };
@@ -271,17 +282,37 @@ function addMeal() {
 
 function showEditModal() {
     modalForEdit.classList.remove('hidden');
-
-    changeType.value = chosenMeal.parentElement.id;
+    submitEdit.disabled = true;
     changeName.value = chosenMeal.innerText;
     // add CSS for overlay to blur background, remove classList hidden & disable bkdg buttons
 };
 
-function editMeal() {
-    // need to finish
+function checkChange() {
+    if (changeName.value !== chosenMeal.innerText) {
+        submitEdit.disabled = false;
+    } else {
+        submitEdit.disabled = true;
+    };
+};
 
-    displayAllRecipes();
-    resetModals();
+function editMeal() {
+    var matchedTypeForEdit = chosenMeal.parentElement.id;
+    var mealsArrayToAddTo = meals[`${matchedTypeForEdit}`];
+    var updatedMealName = changeName.value;
+
+    for (var i = 0; i < mealsArrayToAddTo.length; i++) {
+        if (mealsArrayToAddTo[i] === chosenMeal.innerText) {
+            if (mealsArrayToAddTo[i] === updatedMealName) {
+                resetModals();
+            } else {
+                mealsArrayToAddTo.splice([i], 1, updatedMealName);
+                displayAllRecipes();
+                resetModals();
+            };
+            
+            return;
+        };
+    };
 };
 
 function deleteMeal() {
@@ -297,22 +328,3 @@ function deleteMeal() {
         };
     };
 };
-
-
-// VIEW NOTES FOR HIDE/SHOW CHECKS:
-// view:        Start -> All recipes-> Back home -> Show Recipe -> Clear
-// viewNoRecipe: true ->   false ->    true    ->  false          -> true
-// viewShowRecipe: false -> false ->   false   ->   true          -> false
-// allRecipes:   false  ->  true  ->   false   ->  false          -> false
-
-// function displayHomepage = back home & clear & load
-// function displayRandomRecipe  = show recipe
-// function showAllRecipes = show all
-
-// function toggleView(viewToUpdate) {
-//     if (viewToUpdate.classList.contains('hidden') === true) {
-//         viewToUpdate.classList.remove('hidden');
-//     } else {
-//         viewToUpdate.classList.add('hidden');
-//     };
-// };
