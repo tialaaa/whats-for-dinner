@@ -1,3 +1,5 @@
+// ~~* HOME PAGE *~~ //
+
 var buttonNav = document.querySelector('.nav-button');
 var viewForm = document.querySelector('#left');
 var viewNoRecipe = document.querySelector('#right-no-selection');
@@ -7,23 +9,13 @@ var form = document.querySelector('#recipeTypeForm');
 var recipeOutput = document.querySelector('#recipe-output');
 var buttonClear = document.querySelector('#clear');
 
-var listSides = document.querySelector('#list-sides');
-var listMains = document.querySelector('#list-mains');
-var listDesserts = document.querySelector('#list-desserts');
+var listSides = document.querySelector('#side');
+var listMains = document.querySelector('#main');
+var listDesserts = document.querySelector('#dessert');
 
-
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
-    var selectedType = document.querySelector('input[name="dinner-type"]:checked').value;
-    randomizeRecipe(selectedType);
-    displayRandomRecipe();
-    // TODO: could optimize by calling randomizeRecipe within displayRandomRecipe
-});
-
-buttonClear.addEventListener('click', displayHomepage);
-buttonNav.addEventListener('click', function() {
-    checkFlag(flagNav);
-});
+var listItemSide = document.createElement('li');
+var listItemMain = document.createElement('li');
+var listItemDessert = document.createElement('li');
 
 var flagNav = "homepage";
 var recipe = "";
@@ -78,6 +70,34 @@ var meals = {
     ]
 };
 
+buttonClear.addEventListener('click', displayHomepage);
+buttonNav.addEventListener('click', function() {
+    checkFlag(flagNav);
+});
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    var selectedType = document.querySelector('input[name="dinner-type"]:checked').value;
+    randomizeRecipe(selectedType);
+    displayRandomRecipe();
+    // TODO: could optimize by calling randomizeRecipe within displayRandomRecipe
+});
+
+listSides.addEventListener('click', function(event) {
+    targetMeal();
+    toggleButtons();
+});
+
+listMains.addEventListener('click', function(event) {
+    targetMeal();
+    toggleButtons();
+});
+
+listDesserts.addEventListener('click', function(event) {
+    targetMeal();
+    toggleButtons();
+});
+
 function getRandomIndex(array) {
     var arrayIndex = Math.floor(Math.random() * array.length);
     return array[arrayIndex];
@@ -123,6 +143,9 @@ function checkFlag(flagNav) {
 
 function displayAllRecipes() {
     flagNav = "allRecipes";
+    listSides.innerText = "";
+    listMains.innerText = "";
+    listDesserts.innerText = "";
 
     viewAllRecipes.classList.remove('hidden');
     viewForm.classList.add('hidden');
@@ -130,12 +153,11 @@ function displayAllRecipes() {
     viewShowRecipe.classList.add('hidden');
 
     makeLists(meals);
+    chosenMeal = null;
+    toggleButtons();
 };
 
 function makeLists(meals) {
-    var listItemSide = document.createElement('li');
-    var listItemMain = document.createElement('li');
-    var listItemDessert = document.createElement('li');
 
     for (var i = 0; i < meals.side.length; i++) {
         listItemSide.innerText = meals.side[i];
@@ -156,19 +178,50 @@ function makeLists(meals) {
     };
 };
 
-listSides.addEventListener('click', function(event) {
-    targetMeal();
-    toggleButtons(buttonEdit, buttonDelete, chosenMeal);
+// ~~* ALL RECIPES - ADD/EDIT/DELETE *~~ //
+
+var buttonShowAdd = document.querySelector('#add');
+var buttonShowEdit = document.querySelector('#edit');
+var buttonDelete = document.querySelector('#delete');
+
+var modalForAdd = document.querySelector('#modalAdd');
+var submitAdd = document.querySelector('#submit-add');
+var inputType = document.querySelector('#add-to-type');
+var inputName = document.querySelector('#new-meal');
+var buttonCloseAdd = document.querySelector('#close-add');
+
+var modalForEdit = document.querySelector('#modalEdit');
+var submitEdit = document.querySelector('#submit-edit');
+var changeName = document.querySelector('#change-meal');
+var buttonCloseEdit = document.querySelector('#close-edit');
+
+buttonCloseAdd.addEventListener('click', resetModals);
+buttonCloseEdit.addEventListener('click', resetModals);
+changeName.addEventListener('keyup', checkChange);
+
+buttonShowAdd.addEventListener('click', function(event) {
+    event.preventDefault();
+    showAddModal();
 });
 
-listMains.addEventListener('click', function(event) {
-    targetMeal();
-    toggleButtons(buttonEdit, buttonDelete, chosenMeal);
+submitAdd.addEventListener('click', function(event) {
+    event.preventDefault();
+    addMeal();
 });
 
-listDesserts.addEventListener('click', function(event) {
-    targetMeal();
-    toggleButtons(buttonEdit, buttonDelete, chosenMeal);
+buttonShowEdit.addEventListener('click', function(event) {
+    event.preventDefault();
+    showEditModal()
+});
+
+submitEdit.addEventListener('click', function(event) {
+    event.preventDefault();
+    editMeal();
+});
+
+buttonDelete.addEventListener('click', function(event) {
+    event.preventDefault();
+    deleteMeal()
 });
 
 function targetMeal() {
@@ -185,57 +238,93 @@ function targetMeal() {
     };
 };
 
-function toggleButtons(buttonEdit, buttonDelete, chosenMeal) {
+function toggleButtons() {
     if (chosenMeal !== null) {
-        buttonEdit.disabled = false;
+        buttonShowEdit.disabled = false;
         buttonDelete.disabled = false;
     } else {
-        buttonEdit.disabled = true;
+        buttonShowEdit.disabled = true;
         buttonDelete.disabled = true;
     }
 };
 
-var buttonAdd = document.querySelector('#add');
-var buttonEdit = document.querySelector('#edit');
-var buttonDelete = document.querySelector('#delete');
-var modalForAdd = document.querySelector('#modalAdd');
-var buttonClose = document.querySelector('.close');
-
-buttonAdd.addEventListener('click', function(event) {
-    event.preventDefault();
-    console.log(`add was pressed`)
-    showAddModal();
-});
-
-buttonEdit.addEventListener('click', showEditModal());
-buttonDelete.addEventListener('click', showDeleteModal());
+function resetModals() {
+    modalForAdd.classList.add('hidden');
+    inputName.value = "";
+    inputType.value = "side";
+    modalForEdit.classList.add('hidden');
+    changeName.value = "";
+    // overlay.classList.add("hidden");
+}
 
 function showAddModal() {
     modalForAdd.classList.remove('hidden');
+    // add CSS for overlay to blur background, remove classList hidden & disable bkdg buttons
+};
 
+function addMeal() {
+    var newMealType = inputType.value;
+    var newMealName = inputName.value;
+    var mealsArrayToAddTo = meals[`${newMealType}`];
+
+    for (var i = 0; i < mealsArrayToAddTo.length; i++) {
+        if (mealsArrayToAddTo[i] === newMealName) {
+            resetModals();
+            return;
+        };
+    };
+
+    meals[`${newMealType}`].push(newMealName);
+
+    displayAllRecipes();
+    resetModals();
 };
 
 function showEditModal() {
+    modalForEdit.classList.remove('hidden');
+    submitEdit.disabled = true;
+    changeName.value = chosenMeal.innerText;
+    // add CSS for overlay to blur background, remove classList hidden & disable bkdg buttons
 };
 
-function showDeleteModal() {
+function checkChange() {
+    if (changeName.value !== chosenMeal.innerText) {
+        submitEdit.disabled = false;
+    } else {
+        submitEdit.disabled = true;
+    };
 };
 
+function editMeal() {
+    var matchedTypeForEdit = chosenMeal.parentElement.id;
+    var mealsArrayToAddTo = meals[`${matchedTypeForEdit}`];
+    var updatedMealName = changeName.value;
 
-// VIEW NOTES FOR HIDE/SHOW CHECKS:
-// view:        Start -> All recipes-> Back home -> Show Recipe -> Clear
-// viewNoRecipe: true ->   false ->    true    ->  false          -> true
-// viewShowRecipe: false -> false ->   false   ->   true          -> false
-// allRecipes:   false  ->  true  ->   false   ->  false          -> false
+    for (var i = 0; i < mealsArrayToAddTo.length; i++) {
+        if (mealsArrayToAddTo[i] === chosenMeal.innerText) {
+            if (mealsArrayToAddTo[i] === updatedMealName) {
+                resetModals();
+            } else {
+                mealsArrayToAddTo.splice([i], 1, updatedMealName);
+                displayAllRecipes();
+                resetModals();
+            };
+            
+            return;
+        };
+    };
+};
 
-// function displayHomepage = back home & clear & load
-// function displayRandomRecipe  = show recipe
-// function showAllRecipes = show all
+function deleteMeal() {
+    var matchedTypeForDelete = chosenMeal.parentElement.id;
+    var mealsArrayToDeleteFrom = meals[`${matchedTypeForDelete}`];
 
-// function toggleView(viewToUpdate) {
-//     if (viewToUpdate.classList.contains('hidden') === true) {
-//         viewToUpdate.classList.remove('hidden');
-//     } else {
-//         viewToUpdate.classList.add('hidden');
-//     };
-// };
+    for (var i = 0; i < mealsArrayToDeleteFrom.length; i++) {
+        if (mealsArrayToDeleteFrom[i] == chosenMeal.innerText) {
+            mealsArrayToDeleteFrom.splice([i], 1);;
+
+            displayAllRecipes();
+            return;
+        };
+    };
+};
