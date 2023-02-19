@@ -58,22 +58,36 @@
           <button class="adjust" id="delete" disabled>Delete Meal</button>    
         </form>
         <section class="modal hidden" id="modalAdd">
-          <!-- <div class="modal-content"> -->
-            <button class="close">x</button>
-            <form id="add-new-meal">
-              <label for="add-to-type">Meal Category</label>
-              <select id="add-to-type">
-                <option value="side">Side</option>
-                <option value="main">Main</option>
-                <option value="dessert">Dessert</option>
-              </select>
+          <button class="close">x</button>
+          <form id="add-new-meal">
+            <label for="add-to-type">Meal Category</label>
+            <select id="add-to-type">
+              <option value="side">Side</option>
+              <option value="main">Main</option>
+              <option value="dessert">Dessert</option>
+            </select>
 
-              <label for="new-meal">Meal Name</label>
-              <input type="text" id="new-meal">
-              
-              <button type="submit" id="submit-add">Add Meal</button>
-            </form>
-          <!-- </div> -->
+            <label for="new-meal">Meal Name</label>
+            <input type="text" id="new-meal">
+            
+            <button type="submit" id="submit-add">Add Meal</button>
+          </form>
+        </section>
+        <section class="modal hidden" id="modalEdit">
+          <button class="close">x</button>
+          <form id="edit-meal">
+            <label for="change-type">Meal Category</label>
+            <select id="change-type">
+              <option value="side">Side</option>
+              <option value="main">Main</option>
+              <option value="dessert">Dessert</option>
+            </select>
+
+            <label for="change-meal">Meal Name</label>
+            <input type="text" id="change-meal">
+            
+            <button type="submit" id="submit-edit">Edit Meal</button>
+          </form>
         </section>
         <div class="overlay hidden"></div>
       </section>
