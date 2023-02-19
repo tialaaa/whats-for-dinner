@@ -122,6 +122,9 @@ function checkFlag(flagNav) {
 
 function displayAllRecipes() {
     flagNav = "allRecipes";
+    listSides.innerText = "";
+    listMains.innerText = "";
+    listDesserts.innerText = "";
 
     viewAllRecipes.classList.remove('hidden');
     viewForm.classList.add('hidden');
@@ -209,7 +212,7 @@ var inputName = document.querySelector('#new-meal');
 // var modalForEdit -> to finish
 // var submitEdit -> to finish
 
-buttonClose.addEventListener('click', closeModal);
+buttonClose.addEventListener('click', resetModals);
 
 buttonShowAdd.addEventListener('click', function(event) {
     event.preventDefault();
@@ -232,6 +235,15 @@ buttonDelete.addEventListener('click', function(event) {
     deleteMeal()
 });
 
+function resetModals() {
+    inputName.value = "";
+    inputType.value = "side";
+    modalForAdd.classList.add('hidden');
+    // modal for edit = hide
+    // clear edit inputs
+    // overlay.classList.add("hidden");
+}
+
 function showAddModal() {
     modalForAdd.classList.remove('hidden');
     // add CSS for overlay to blur background, remove classList hidden & disable bkdg buttons
@@ -240,49 +252,44 @@ function showAddModal() {
 function addMeal() {
     var newMealType = inputType.value;
     var newMealName = inputName.value;
-    var matchedTypeArray = meals[`${newMealType}`];
+    var mealsArrayToAddTo = meals[`${newMealType}`];
 
-    for (var i = 0; i < matchedTypeArray.length; i++) {
-        if (matchedTypeArray[i] === newMealName) {
+    for (var i = 0; i < mealsArrayToAddTo.length; i++) {
+        if (mealsArrayToAddTo[i] === newMealName) {
             modalForAdd.classList.add('hidden');
             return;
         };
     };
 
     meals[`${newMealType}`].push(newMealName);
-    modalForAdd.classList.add('hidden');
-    listSides.innerText = "";
-    listMains.innerText = "";
-    listDesserts.innerText = "";
-    flagNav = "homepage";
-    checkFlag(flagNav);
-    inputName.value = "";
-    inputType.value = "side";
-}
 
-function closeModal() {
-    modalForAdd.classList.add('hidden');
-    // overlay.classList.add("hidden");
+    displayAllRecipes();
+    resetModals();
 };
 
 function showEditModal() {
+    // need to finish
+};
+
+function editMeal() {
+    // need to finish
+    
+    displayAllRecipes();
+    resetModals();
 };
 
 function deleteMeal() {
+    var matchedTypeForDelete = chosenMeal.parentElement.id;
+    var mealsArrayToDeleteFrom = meals[`${matchedTypeForDelete}`];
 
-    var stored = chosenMeal.parentElement.id
-    console.log(stored)
+    for (var i = 0; i < mealsArrayToDeleteFrom.length; i++) {
+        if (mealsArrayToDeleteFrom[i] == chosenMeal.innerText) {
+            mealsArrayToDeleteFrom.splice([i], 1);;
 
-    // for (var i = 0; i < meals.length; i++) {
-    //     if (Object.values(meals[i]).includes(chosenMeal.innerText)) {
-    //         console.log(chosenMeal.innerText)
-    //     } else {
-    //         console.log(`not in ${meals[i]}`)
-    //     }
-    // }
-    // using chosenMeal, identify it's key
-    // match to the correct array within meals object
-    // and splice it from that array
+            displayAllRecipes();
+            return;
+        };
+    };
 };
 
 
