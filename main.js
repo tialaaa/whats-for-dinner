@@ -209,8 +209,10 @@ var submitAdd = document.querySelector('#submit-add');
 var inputType = document.querySelector('#add-to-type');
 var inputName = document.querySelector('#new-meal');
 
-// var modalForEdit -> to finish
-// var submitEdit -> to finish
+var modalForEdit = document.querySelector('#modalEdit');
+var submitEdit = document.querySelector('#submit-edit');
+var changeType = document.querySelector('#change-type');
+var changeName = document.querySelector('#change-meal');
 
 buttonClose.addEventListener('click', resetModals);
 
@@ -268,12 +270,16 @@ function addMeal() {
 };
 
 function showEditModal() {
-    // need to finish
+    modalForEdit.classList.remove('hidden');
+
+    changeType.value = chosenMeal.parentElement.id;
+    changeName.value = chosenMeal.innerText;
+    // add CSS for overlay to blur background, remove classList hidden & disable bkdg buttons
 };
 
 function editMeal() {
     // need to finish
-    
+
     displayAllRecipes();
     resetModals();
 };
