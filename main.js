@@ -7,10 +7,9 @@ var form = document.querySelector('#recipeTypeForm');
 var recipeOutput = document.querySelector('#recipe-output');
 var buttonClear = document.querySelector('#clear');
 
-var listSides = document.querySelector('#list-sides');
-var listMains = document.querySelector('#list-mains');
-var listDesserts = document.querySelector('#list-desserts');
-
+var listSides = document.querySelector('#side');
+var listMains = document.querySelector('#main');
+var listDesserts = document.querySelector('#dessert');
 
 form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -132,10 +131,11 @@ function displayAllRecipes() {
     makeLists(meals);
 };
 
+var listItemSide = document.createElement('li');
+var listItemMain = document.createElement('li');
+var listItemDessert = document.createElement('li');
+
 function makeLists(meals) {
-    var listItemSide = document.createElement('li');
-    var listItemMain = document.createElement('li');
-    var listItemDessert = document.createElement('li');
 
     for (var i = 0; i < meals.side.length; i++) {
         listItemSide.innerText = meals.side[i];
@@ -158,17 +158,17 @@ function makeLists(meals) {
 
 listSides.addEventListener('click', function(event) {
     targetMeal();
-    toggleButtons(buttonEdit, buttonDelete, chosenMeal);
+    toggleButtons();
 });
 
 listMains.addEventListener('click', function(event) {
     targetMeal();
-    toggleButtons(buttonEdit, buttonDelete, chosenMeal);
+    toggleButtons();
 });
 
 listDesserts.addEventListener('click', function(event) {
     targetMeal();
-    toggleButtons(buttonEdit, buttonDelete, chosenMeal);
+    toggleButtons();
 });
 
 function targetMeal() {
@@ -185,40 +185,104 @@ function targetMeal() {
     };
 };
 
-function toggleButtons(buttonEdit, buttonDelete, chosenMeal) {
+function toggleButtons() {
     if (chosenMeal !== null) {
-        buttonEdit.disabled = false;
+        buttonShowEdit.disabled = false;
         buttonDelete.disabled = false;
     } else {
-        buttonEdit.disabled = true;
+        buttonShowEdit.disabled = true;
         buttonDelete.disabled = true;
     }
 };
 
-var buttonAdd = document.querySelector('#add');
-var buttonEdit = document.querySelector('#edit');
+// MODALS FOR ADD/EDIT/DELETE //
+var buttonShowAdd = document.querySelector('#add');
+var buttonShowEdit = document.querySelector('#edit');
 var buttonDelete = document.querySelector('#delete');
-var modalForAdd = document.querySelector('#modalAdd');
 var buttonClose = document.querySelector('.close');
 
-buttonAdd.addEventListener('click', function(event) {
+var modalForAdd = document.querySelector('#modalAdd');
+var submitAdd = document.querySelector('#submit-add');
+var inputType = document.querySelector('#add-to-type');
+var inputName = document.querySelector('#new-meal');
+
+// var modalForEdit -> to finish
+// var submitEdit -> to finish
+
+buttonClose.addEventListener('click', closeModal);
+
+buttonShowAdd.addEventListener('click', function(event) {
     event.preventDefault();
     console.log(`add was pressed`)
     showAddModal();
 });
 
-buttonEdit.addEventListener('click', showEditModal());
-buttonDelete.addEventListener('click', showDeleteModal());
+submitAdd.addEventListener('click', function(event) {
+    event.preventDefault();
+    addMeal();
+});
+
+buttonShowEdit.addEventListener('click', function(event) {
+    event.preventDefault();
+    showEditModal()
+});
+
+buttonDelete.addEventListener('click', function(event) {
+    event.preventDefault();
+    deleteMeal()
+});
 
 function showAddModal() {
     modalForAdd.classList.remove('hidden');
+    // add CSS for overlay to blur background, remove classList hidden & disable bkdg buttons
+};
 
+function addMeal() {
+    var newMealType = inputType.value;
+    var newMealName = inputName.value;
+    var matchedTypeArray = meals[`${newMealType}`];
+
+    for (var i = 0; i < matchedTypeArray.length; i++) {
+        if (matchedTypeArray[i] === newMealName) {
+            modalForAdd.classList.add('hidden');
+            return;
+        };
+    };
+
+    meals[`${newMealType}`].push(newMealName);
+    modalForAdd.classList.add('hidden');
+    listSides.innerText = "";
+    listMains.innerText = "";
+    listDesserts.innerText = "";
+    flagNav = "homepage";
+    checkFlag(flagNav);
+    inputName.value = "";
+    inputType.value = "side";
+}
+
+function closeModal() {
+    modalForAdd.classList.add('hidden');
+    // overlay.classList.add("hidden");
 };
 
 function showEditModal() {
 };
 
-function showDeleteModal() {
+function deleteMeal() {
+
+    var stored = chosenMeal.parentElement.id
+    console.log(stored)
+
+    // for (var i = 0; i < meals.length; i++) {
+    //     if (Object.values(meals[i]).includes(chosenMeal.innerText)) {
+    //         console.log(chosenMeal.innerText)
+    //     } else {
+    //         console.log(`not in ${meals[i]}`)
+    //     }
+    // }
+    // using chosenMeal, identify it's key
+    // match to the correct array within meals object
+    // and splice it from that array
 };
 
 
