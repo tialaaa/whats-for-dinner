@@ -38,19 +38,21 @@
         <button id="clear">Clear</button>
       </section>
       <section class="view-all hidden" id="all-recipes">
-        <section class="recipe-lists">
-          <h2 class="list-headers" id="list-sides">Sides</h2>
-          <ul id="side"></ul>
+        <section id="list-block">
+          <section class="recipe-lists">
+            <h2 class="list-headers" id="list-sides">Sides</h2>
+            <ul id="side"></ul>
+          </section>
+          <section class="recipe-lists">
+            <h2 class="list-headers" id="list-mains">Main Dishes</h2>
+            <ul id="main"></ul>
+          </section>
+          <section class="recipe-lists">
+            <h2 class="list-headers" id="list-desserts">Dessert</h2>
+            <ul id="dessert"></ul>
+          </section>
         </section>
-        <section class="recipe-lists">
-          <h2 class="list-headers" id="list-mains">Main Dishes</h2>
-          <ul id="main"></ul>
-        </section>
-        <section class="recipe-lists">
-          <h2 class="list-headers" id="list-desserts">Dessert</h2>
-          <ul id="dessert"></ul>
-        </section>
-        <form id="meal-adjustments">
+        <form id="meal-adjustments-buttons">
           <button class="adjust" id="add">Add Meal</button>
           <button class="adjust" id="edit" disabled>Edit Meal</button>
           <button class="adjust" id="delete" disabled>Delete Meal</button>    
@@ -58,23 +60,33 @@
         <section class="modal hidden" id="modalAdd">
           <button class="close" id="close-add">x</button>
           <form id="add-new-meal">
-            <label for="add-to-type">Meal Category</label>
-            <select id="add-to-type">
-              <option value="side">Side</option>
-              <option value="main">Main</option>
-              <option value="dessert">Dessert</option>
-            </select>
-            <label for="new-meal">Meal Name</label>
-            <input type="text" id="new-meal">
-            <button type="submit" id="submit-add">Add Meal</button>
+            <div class="form-rows-modal">
+              <label for="add-to-type">Meal Category</label>
+              <select id="add-to-type">
+                <option value="side">Side</option>
+                <option value="main">Main</option>
+                <option value="dessert">Dessert</option>
+              </select>
+            </div><br>
+            <div class="form-rows-modal">
+              <label for="new-meal">Meal Name</label>
+              <input type="text" id="new-meal">
+            </div><br>
+            <div>
+              <button type="submit" id="submit-add">Add Meal</button>
+            </div>
           </form>
         </section>
         <section class="modal hidden" id="modalEdit">
           <button class="close" id="close-edit">x</button>
           <form id="edit-meal">
-            <label for="change-meal">Meal Name</label>
-            <input type="text" id="change-meal"> 
-            <button type="submit" id="submit-edit">Submit Edit</button>
+            <div class="form-rows-modal">
+              <label for="change-meal">Meal Name</label>
+              <input type="text" id="change-meal"> 
+            </div><br>
+            <div>
+              <button type="submit" id="submit-edit">Submit Edit</button>
+            </div>
           </form>
         </section>
         <div class="overlay hidden"></div>
