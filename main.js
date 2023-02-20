@@ -80,7 +80,6 @@ form.addEventListener('submit', function(event) {
     var selectedType = document.querySelector('input[name="dinner-type"]:checked').value;
     randomizeRecipe(selectedType);
     displayRandomRecipe();
-    // TODO: could optimize by calling randomizeRecipe within displayRandomRecipe
 });
 
 listSides.addEventListener('click', function(event) {
@@ -126,7 +125,6 @@ function displayHomepage() {
     viewNoRecipe.classList.remove('hidden');
     viewShowRecipe.classList.add('hidden');
     viewAllRecipes.classList.add('hidden');
-    // TODO: Clear radio button selection
 
     listSides.innerText = "";
     listMains.innerText = "";
@@ -183,6 +181,7 @@ function makeLists(meals) {
 var buttonShowAdd = document.querySelector('#add');
 var buttonShowEdit = document.querySelector('#edit');
 var buttonDelete = document.querySelector('#delete');
+var overlay = document.querySelector('.overlay');
 
 var modalForAdd = document.querySelector('#modalAdd');
 var submitAdd = document.querySelector('#submit-add');
@@ -197,6 +196,7 @@ var buttonCloseEdit = document.querySelector('#close-edit');
 
 buttonCloseAdd.addEventListener('click', resetModals);
 buttonCloseEdit.addEventListener('click', resetModals);
+inputName.addEventListener('keyup', checkChange);
 changeName.addEventListener('keyup', checkChange);
 
 buttonShowAdd.addEventListener('click', function(event) {
@@ -254,12 +254,13 @@ function resetModals() {
     inputType.value = "side";
     modalForEdit.classList.add('hidden');
     changeName.value = "";
-    // overlay.classList.add("hidden");
-}
+    overlay.classList.add("hidden");
+};
 
 function showAddModal() {
     modalForAdd.classList.remove('hidden');
-    // add CSS for overlay to blur background, remove classList hidden & disable bkdg buttons
+    overlay.classList.remove("hidden");
+    submitAdd.disabled = true;
 };
 
 function addMeal() {
@@ -284,11 +285,19 @@ function showEditModal() {
     modalForEdit.classList.remove('hidden');
     submitEdit.disabled = true;
     changeName.value = chosenMeal.innerText;
-    // add CSS for overlay to blur background, remove classList hidden & disable bkdg buttons
+    overlay.classList.remove("hidden");
 };
 
 function checkChange() {
-    if (changeName.value !== chosenMeal.innerText) {
+    if (inputName.value !== "") {
+        submitAdd.disabled = false;
+    } else {
+        submitAdd.disabled = true;
+    };
+
+    if (chosenMeal === null) {
+        return;
+    } else if (changeName.value !== chosenMeal.innerText && chosenMeal.innerText !== null) {
         submitEdit.disabled = false;
     } else {
         submitEdit.disabled = true;
