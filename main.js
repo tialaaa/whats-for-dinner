@@ -134,8 +134,10 @@ function displayHomepage() {
 function checkFlag(flagNav) {
     if (flagNav === "homepage") {
         displayAllRecipes();
+        buttonNav.innerText = "Back To Home";
     } else if (flagNav === "allRecipes") {
         displayHomepage();
+        buttonNav.innerText = "View All Recipes";
     };
 };
 
