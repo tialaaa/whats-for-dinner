@@ -14,7 +14,7 @@ To use this application:
 
 ### Preview of App:
 [//]: <> (Provide ONE gif or screenshot of your application - choose the "coolest" piece of functionality to show off.)
-
+![WhatsForDinner-example1](https://user-images.githubusercontent.com/121128718/219996701-e0a99f53-47aa-4337-ae4c-b5d458048ec1.gif)
 
 ### Context:
 [//]: <> (Give some context for the project here. How long did you have to work on it? How far into the Turing program are you?)
